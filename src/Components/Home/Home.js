@@ -1,12 +1,18 @@
 import { useQuery } from "react-query";
+import EachCompletedTask from "./EachCompletedTask";
 import EachNewTask from "./EachNewTask";
 
 const Home = () => {
-  const { isLoading, data: tasks } = useQuery("toDoTask", () =>
+  const { isLoading: newLoading, data: tasks } = useQuery("toDoTask", () =>
     fetch("fakeTodo.json").then((res) => res.json())
   );
 
-  if (isLoading) {
+  const { isLoading: completedLoading, data: completedTasks } = useQuery(
+    "completedTasks",
+    () => fetch("fakeComplete.json").then((res) => res.json())
+  );
+
+  if (newLoading || completedLoading) {
     return (
       <div>
         <p>loading...</p>
@@ -15,10 +21,10 @@ const Home = () => {
   }
 
   return (
-    <section>
-      <p className="text-center text-3xl py-6">Main Board</p>
+    <section className="mb-6">
+      <p className="text-center text-3xl py-12">Main Board</p>
       <section className="flex justify-center items-center">
-        <div className="grid gap-16 grid-cols-1 md:grid-cols-2">
+        <div className="grid gap-6 md:gap-16 grid-cols-1 md:grid-cols-2">
           <div className="w-[325px] py-[20px] border-2 bg-white rounded-lg">
             <div className="flex justify-center items-center">
               <input
@@ -40,7 +46,18 @@ const Home = () => {
             </div>
           </div>
 
-          <div className="w-[325px] py-[20px] border-2 bg-white rounded-lg"></div>
+          <div className="w-[325px] py-[10px] border-2 bg-white rounded-lg">
+            <p className="text-center mt-3 mb-7 font-semibold text-lg">
+              Completed Tasks
+            </p>
+            <div className="mx-5">
+              {completedTasks.map((item) => (
+                <EachCompletedTask key={item._id} item={item}>
+                  {" "}
+                </EachCompletedTask>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </section>
