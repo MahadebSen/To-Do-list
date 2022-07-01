@@ -28,25 +28,47 @@ const Home = () => {
   }
 
   const handleAdd = (event) => {
-    event.preventDefault();
-    const todo = event.target.todo.value;
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const todo = event.target.todo.value;
 
-    const newTask = { task: todo };
+      const newTask = { task: todo };
 
-    fetch("http://localhost:5000/addnewtask", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(newTask),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.acknowledged) {
-          event.target.todo.value = "";
-          newFetch();
-        }
-      });
+      fetch("http://localhost:5000/addnewtask", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.acknowledged) {
+            event.target.todo.value = "";
+            newFetch();
+          }
+        });
+    } else {
+      event.preventDefault();
+      const todo = event.target.todo.value;
+
+      const newTask = { task: todo };
+
+      fetch("http://localhost:5000/addnewtask", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.acknowledged) {
+            event.target.todo.value = "";
+            newFetch();
+          }
+        });
+    }
   };
 
   const handleDeleteNewTask = (item) => {
@@ -156,6 +178,7 @@ const Home = () => {
                     key={item._id}
                     item={item}
                     handleDeleteNewTask={handleDeleteNewTask}
+                    newFetch={newFetch}
                   ></EachNewTask>
                 ))}
               </div>

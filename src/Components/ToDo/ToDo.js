@@ -52,7 +52,7 @@ const ToDo = () => {
   );
 
   return (
-    <section className="mt-8 mb-[270px]">
+    <section className="mt-8 mb-[270px] max-w-6xl mx-auto">
       <div>
         <p className="text-center my-4 font-semibold text-lg">My Tasks</p>
         <div className="mx-5">

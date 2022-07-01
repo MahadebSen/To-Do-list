@@ -62,7 +62,7 @@ const CompletedTasks = () => {
   };
 
   return (
-    <section className="mt-8 mb-[250px]">
+    <section className="mt-8 mb-[250px] max-w-6xl mx-auto">
       <div>
         <p className="text-center mt-4 mb-7 font-semibold text-lg">
           Completed Tasks
