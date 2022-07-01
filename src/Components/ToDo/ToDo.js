@@ -61,6 +61,7 @@ const ToDo = () => {
               key={item._id}
               item={item}
               handleDeleteNewTask={handleDeleteNewTask}
+              newFetch={newFetch}
             ></EachNewTask>
           ))}
         </div>
