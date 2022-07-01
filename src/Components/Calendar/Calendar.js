@@ -6,7 +6,7 @@ const Calendar1 = () => {
   const [value, onChange] = useState(new Date());
 
   return (
-    <section className="flex justify-center items-center my-20">
+    <section className="flex justify-center items-center mt-20 mb-[300px]">
       <Calendar onChange={onChange} value={value} />
     </section>
   );

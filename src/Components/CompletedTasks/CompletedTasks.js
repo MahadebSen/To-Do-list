@@ -33,8 +33,36 @@ const CompletedTasks = () => {
       });
   };
 
+  const handleRadioDeleteCompletedTask = (item) => {
+    const selectedTask = item.completed;
+    fetch(`http://localhost:5000/deletecompletedtask/${item._id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.deletedCount > 0) {
+          completeFetch();
+        }
+      });
+
+    const reAddTask = { task: selectedTask };
+    console.log(reAddTask);
+    fetch("http://localhost:5000/addnewtask", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(reAddTask),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
-    <section className="my-8">
+    <section className="mt-8 mb-[250px]">
       <div>
         <p className="text-center mt-4 mb-7 font-semibold text-lg">
           Completed Tasks
@@ -45,6 +73,7 @@ const CompletedTasks = () => {
               key={item._id}
               item={item}
               handleDeleteCompletedTask={handleDeleteCompletedTask}
+              handleRadioDeleteCompletedTask={handleRadioDeleteCompletedTask}
             >
               {" "}
             </EachCompletedTask>

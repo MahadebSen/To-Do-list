@@ -93,12 +93,42 @@ const Home = () => {
       });
   };
 
+  const handleRadioDeleteCompletedTask = (item) => {
+    const selectedTask = item.completed;
+    fetch(`http://localhost:5000/deletecompletedtask/${item._id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.deletedCount > 0) {
+          completeFetch();
+        }
+      });
+
+    const reAddTask = { task: selectedTask };
+    console.log(reAddTask);
+    fetch("http://localhost:5000/addnewtask", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(reAddTask),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          newFetch();
+        }
+      });
+  };
+
   const reverseTasks = tasks.map(
     (val, index, array) => array[array.length - 1 - index]
   );
 
   return (
-    <section className="mb-6">
+    <section className="mb-16">
       <p className="text-center text-3xl py-12">Main Board</p>
       <section className="flex justify-center items-center">
         <div className="grid gap-6 md:gap-16 grid-cols-1 md:grid-cols-2">
@@ -142,6 +172,9 @@ const Home = () => {
                   key={item._id}
                   item={item}
                   handleDeleteCompletedTask={handleDeleteCompletedTask}
+                  handleRadioDeleteCompletedTask={
+                    handleRadioDeleteCompletedTask
+                  }
                 >
                   {" "}
                 </EachCompletedTask>
