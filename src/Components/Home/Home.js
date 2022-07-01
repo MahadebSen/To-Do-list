@@ -4,12 +4,13 @@ import EachNewTask from "./EachNewTask";
 
 const Home = () => {
   const { isLoading: newLoading, data: tasks } = useQuery("toDoTask", () =>
-    fetch("fakeTodo.json").then((res) => res.json())
+    fetch("http://localhost:5000/newtasks").then((res) => res.json())
   );
 
   const { isLoading: completedLoading, data: completedTasks } = useQuery(
     "completedTasks",
-    () => fetch("fakeComplete.json").then((res) => res.json())
+    () =>
+      fetch("http://localhost:5000/completedtasks").then((res) => res.json())
   );
 
   if (newLoading || completedLoading) {
@@ -19,6 +20,10 @@ const Home = () => {
       </div>
     );
   }
+
+  const reverseTasks = tasks.map(
+    (val, index, array) => array[array.length - 1 - index]
+  );
 
   return (
     <section className="mb-6">
@@ -39,7 +44,7 @@ const Home = () => {
             <div>
               <p className="text-center my-3 font-semibold text-lg">My Tasks</p>
               <div className="mx-5">
-                {tasks.map((item) => (
+                {reverseTasks.map((item) => (
                   <EachNewTask key={item._id} item={item}></EachNewTask>
                 ))}
               </div>
