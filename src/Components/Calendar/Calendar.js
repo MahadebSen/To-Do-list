@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
-const Calendar = () => {
+const Calendar1 = () => {
+  const [value, onChange] = useState(new Date());
+
   return (
-    <div>
-      <h1>hiii from calendar</h1>
-    </div>
+    <section className="flex justify-center items-center my-20">
+      <Calendar onChange={onChange} value={value} />
+    </section>
   );
 };
 
-export default Calendar;
+export default Calendar1;
