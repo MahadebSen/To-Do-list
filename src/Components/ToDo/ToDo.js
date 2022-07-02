@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import EachNewTask from "../Home/EachNewTask";
+import Loading from "../Loading/Loading";
 
 const ToDo = () => {
   const {
@@ -8,22 +9,27 @@ const ToDo = () => {
     data: tasks,
     refetch: newFetch,
   } = useQuery("toDoTask", () =>
-    fetch("http://localhost:5000/newtasks").then((res) => res.json())
+    fetch("https://dudley-chesterfield-16746.herokuapp.com/newtasks").then(
+      (res) => res.json()
+    )
   );
 
   if (newLoading) {
     return (
       <div>
-        <p>loading...</p>
+        <Loading></Loading>
       </div>
     );
   }
 
   const handleDeleteNewTask = (item) => {
     const selectedTask = item.task;
-    fetch(`http://localhost:5000/deletenewtask/${item._id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://dudley-chesterfield-16746.herokuapp.com/deletenewtask/${item._id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -34,7 +40,7 @@ const ToDo = () => {
 
     const completeTask = { completed: selectedTask };
     console.log(completeTask);
-    fetch("http://localhost:5000/addcompletedtask", {
+    fetch("https://dudley-chesterfield-16746.herokuapp.com/addcompletedtask", {
       method: "POST",
       headers: {
         "content-type": "application/json",

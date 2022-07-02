@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import Loading from "../Loading/Loading";
 import EachCompletedTask from "./EachCompletedTask";
 import EachNewTask from "./EachNewTask";
 
@@ -8,7 +9,9 @@ const Home = () => {
     data: tasks,
     refetch: newFetch,
   } = useQuery("toDoTask", () =>
-    fetch("http://localhost:5000/newtasks").then((res) => res.json())
+    fetch("https://dudley-chesterfield-16746.herokuapp.com/newtasks").then(
+      (res) => res.json()
+    )
   );
 
   const {
@@ -16,13 +19,15 @@ const Home = () => {
     data: completedTasks,
     refetch: completeFetch,
   } = useQuery("completedTasks", () =>
-    fetch("http://localhost:5000/completedtasks").then((res) => res.json())
+    fetch(
+      "https://dudley-chesterfield-16746.herokuapp.com/completedtasks"
+    ).then((res) => res.json())
   );
 
   if (newLoading || completedLoading) {
     return (
       <div>
-        <p>loading...</p>
+        <Loading></Loading>
       </div>
     );
   }
@@ -34,7 +39,7 @@ const Home = () => {
 
       const newTask = { task: todo };
 
-      fetch("http://localhost:5000/addnewtask", {
+      fetch("https://dudley-chesterfield-16746.herokuapp.com/addnewtask", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -54,7 +59,7 @@ const Home = () => {
 
       const newTask = { task: todo };
 
-      fetch("http://localhost:5000/addnewtask", {
+      fetch("https://dudley-chesterfield-16746.herokuapp.com/addnewtask", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -73,9 +78,12 @@ const Home = () => {
 
   const handleDeleteNewTask = (item) => {
     const selectedTask = item.task;
-    fetch(`http://localhost:5000/deletenewtask/${item._id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://dudley-chesterfield-16746.herokuapp.com/deletenewtask/${item._id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -86,7 +94,7 @@ const Home = () => {
 
     const completeTask = { completed: selectedTask };
     console.log(completeTask);
-    fetch("http://localhost:5000/addcompletedtask", {
+    fetch("https://dudley-chesterfield-16746.herokuapp.com/addcompletedtask", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -103,9 +111,12 @@ const Home = () => {
 
   const handleDeleteCompletedTask = (id) => {
     console.log(id);
-    fetch(`http://localhost:5000/deletecompletedtask/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://dudley-chesterfield-16746.herokuapp.com/deletecompletedtask/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -117,9 +128,12 @@ const Home = () => {
 
   const handleRadioDeleteCompletedTask = (item) => {
     const selectedTask = item.completed;
-    fetch(`http://localhost:5000/deletecompletedtask/${item._id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://dudley-chesterfield-16746.herokuapp.com/deletecompletedtask/${item._id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -130,7 +144,7 @@ const Home = () => {
 
     const reAddTask = { task: selectedTask };
     console.log(reAddTask);
-    fetch("http://localhost:5000/addnewtask", {
+    fetch("https://dudley-chesterfield-16746.herokuapp.com/addnewtask", {
       method: "POST",
       headers: {
         "content-type": "application/json",

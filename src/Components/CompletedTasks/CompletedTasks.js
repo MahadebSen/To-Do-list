@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "react-query";
 import EachCompletedTask from "../Home/EachCompletedTask";
+import Loading from "../Loading/Loading";
 
 const CompletedTasks = () => {
   const {
@@ -8,22 +9,27 @@ const CompletedTasks = () => {
     data: completedTasks,
     refetch: completeFetch,
   } = useQuery("completedTasks", () =>
-    fetch("http://localhost:5000/completedtasks").then((res) => res.json())
+    fetch(
+      "https://dudley-chesterfield-16746.herokuapp.com/completedtasks"
+    ).then((res) => res.json())
   );
 
   if (completedLoading) {
     return (
       <div>
-        <p>loading...</p>
+        <Loading></Loading>
       </div>
     );
   }
 
   const handleDeleteCompletedTask = (id) => {
     console.log(id);
-    fetch(`http://localhost:5000/deletecompletedtask/${id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://dudley-chesterfield-16746.herokuapp.com/deletecompletedtask/${id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -35,9 +41,12 @@ const CompletedTasks = () => {
 
   const handleRadioDeleteCompletedTask = (item) => {
     const selectedTask = item.completed;
-    fetch(`http://localhost:5000/deletecompletedtask/${item._id}`, {
-      method: "DELETE",
-    })
+    fetch(
+      `https://dudley-chesterfield-16746.herokuapp.com/deletecompletedtask/${item._id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -48,7 +57,7 @@ const CompletedTasks = () => {
 
     const reAddTask = { task: selectedTask };
     console.log(reAddTask);
-    fetch("http://localhost:5000/addnewtask", {
+    fetch("https://dudley-chesterfield-16746.herokuapp.com/addnewtask", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -62,7 +71,7 @@ const CompletedTasks = () => {
   };
 
   return (
-    <section className="mt-8 mb-[250px] max-w-6xl mx-auto">
+    <section className="mt-8 mb-[270px] max-w-6xl mx-auto">
       <div>
         <p className="text-center mt-4 mb-7 font-semibold text-lg">
           Completed Tasks

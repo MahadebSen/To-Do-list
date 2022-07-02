@@ -12,7 +12,7 @@ const EachNewTask = ({ item, handleDeleteNewTask, newFetch }) => {
     event.preventDefault();
     const editedTask = { task: await event.target.edited.value };
     console.log(editedTask);
-    fetch(`http://localhost:5000/updatetask/${_id}`, {
+    fetch(`https://dudley-chesterfield-16746.herokuapp.com/updatetask/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
